@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 require("dotenv").config();
 require("./conn/conn");
-// require("./models/associations");
 
 const User = require("./router/user");
 
