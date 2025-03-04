@@ -7,10 +7,6 @@ const User = sequelize.define('User', {
     email: {type: DataTypes.STRING,allowNull: false, unique: true},
     password: {type: DataTypes.STRING, allowNull: false}, 
     address: {type: DataTypes.STRING, allowNull: false}, 
-    avatar: {
-        type: DataTypes.STRING,
-        defaultValue: "https://thenounproject.com/browse/icons/term/default-user/"
-    },
     role: {type: DataTypes.ENUM("user", "admin"), defaultValue: "user"},
 },{timestamps: true});
 

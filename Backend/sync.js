@@ -1,13 +1,21 @@
-const sequelize = require('./conn/conn'); 
-require("./models/associations");
+const sequelize = require("./conn/conn");
+const applyAssociations = require("./models/association");
 
-const syncDB = async () => {
-  try {
-    await sequelize.sync({ force: true });  // This will **DROP** all tables and recreate them
-    console.log("All tables have been successfully recreated.");
-  } catch (error) {
-    console.error("Error syncing database:", error);
-  }
-};
+// Import models to ensure they are registered
+require("./models/user");
+require("./models/components");
 
-syncDB();
+// Apply associations
+applyAssociations();
+
+// Sync database
+(async () => {
+    try {
+        await sequelize.sync({ alter: true }); // Ensures tables match model definitions
+        console.log("Database synchronized successfully!");
+    } catch (error) {
+        console.error("Error synchronizing database:", error);
+    } finally {
+        process.exit(); // Exit script after syncing
+    }
+})();

@@ -2,7 +2,7 @@ const router = require("express").Router();
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const authenticateToken = require("./userAuth");
+const authenticateToken = require("../middlewares/userAuth");
 require("dotenv").config();
 
 
@@ -73,7 +73,7 @@ router.post("/sign-in", async (req, res) => {
             return res.status(400).json({ message: "Invalid Credentials" });
         }
         const authClaims = {id: existingUser.id, role: existingUser.role};
-        const token = jwt.sign({authClaims}, process.env.TOKENSECRET, {expiresIn:"10d"});
+        const token = jwt.sign({authClaims}, process.env.JWT_SECRET, {expiresIn:"10d"});
 
         res.status(200).json({ id: existingUser.id, role: existingUser.role, token});
 
