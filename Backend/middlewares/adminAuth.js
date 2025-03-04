@@ -4,6 +4,7 @@ const User = require("../models/user");
 const checkAdmin = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
+        
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             return res.status(401).json({ message: "Access Denied: No or malformed token" });
         }
@@ -23,7 +24,8 @@ const checkAdmin = async (req, res, next) => {
         req.user = user; // Store user info for later use
         next();
     } catch (error) {
-        return res.status(401).json({ message: "Invalid token", error: error.message });
+        return res.status(401).
+        json({ message: "Invalid token", error: error.message });
     }
 };
 
