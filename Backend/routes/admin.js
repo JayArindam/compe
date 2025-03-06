@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Component = require("../models/components");
+const Product = require("../models/product");
 const checkAdmin = require("../middlewares/adminAuth");
 
 // for testing purposes because jay is dum
@@ -9,7 +9,7 @@ router.get("/check", checkAdmin, (req, res) => {
 });
 
 // Route to add a component (Admin Only)
-router.post("/add-component", checkAdmin, async (req, res) => {
+router.post("/add-product", checkAdmin, async (req, res) => {
     const { name, type, brand, price, stock } = req.body;
 
     if (!name || !type || !price || !stock || !brand) {
@@ -17,11 +17,11 @@ router.post("/add-component", checkAdmin, async (req, res) => {
     }
 
     try {
-        const component = await Component.create({ name, type, brand, price, stock });
+        const product = await Product.create({ name, type, brand, price, stock });
 
-        res.status(201).json({ message: "Component added successfully", component });
+        res.status(201).json({ message: "Product added successfully",product });
     } catch (error) {
-        console.error("Error adding component:", error);
+        console.error("Error adding product:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 });

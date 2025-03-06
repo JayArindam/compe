@@ -3,7 +3,7 @@ const applyAssociations = require("./models/association");
 
 // Import models to ensure they are registered
 require("./models/user");
-require("./models/components");
+require("./models/product");
 
 // Apply associations
 applyAssociations();
