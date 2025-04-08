@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/product");
+const Component = require("../models/component");
 const checkAdmin = require("../middlewares/adminAuth");
 
 // for testing purposes because jay is dum
@@ -9,7 +9,7 @@ router.get("/check", checkAdmin, (req, res) => {
 });
 
 // Route to add a component (Admin Only)
-router.post("/add-product", checkAdmin, async (req, res) => {
+router.post("/add-component", checkAdmin, async (req, res) => {
     const { name, type, brand, price, stock } = req.body;
 
     if (!name || !type || !price || !stock || !brand) {
@@ -17,11 +17,33 @@ router.post("/add-product", checkAdmin, async (req, res) => {
     }
 
     try {
-        const product = await Product.create({ name, type, brand, price, stock });
+        const product = await Component.create({ name, type, brand, price, stock });
 
-        res.status(201).json({ message: "Product added successfully",product });
+        res.status(201).json({ message: "Component added successfully",product });
     } catch (error) {
         console.error("Error adding product:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+// Route to delete a component by name (Admin Only)
+router.delete("/remove-component", checkAdmin, async (req, res) => {
+    const { name } = req.body;
+
+    if (!name) {
+        return res.status(400).json({ message: "Missing component name" });
+    }
+
+    try {
+        const deleted = await Component.destroy({ where: { name } });
+
+        if (deleted === 0) {
+            return res.status(404).json({ message: "Component not found" });
+        }
+
+        res.status(200).json({ message: `Component '${name}' removed successfully` });
+    } catch (error) {
+        console.error("Error deleting component:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 });

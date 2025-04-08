@@ -1,13 +1,13 @@
 const User = require("./user");
-const Product = require("./product");
+const Component = require("./component");
 
 // Example: If you want to associate components with an admin user
-User.hasMany(Product, {
+User.hasMany(Component, {
   foreignKey: "adminId",
   as: "product", // Optional alias
 });
 
-Product.belongsTo(User, {
+Component.belongsTo(User, {
   foreignKey: "adminId",
   as: "admin",
 });
