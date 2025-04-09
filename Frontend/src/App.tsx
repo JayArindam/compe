@@ -1,12 +1,15 @@
-import './App.css'
-import Signup from './components/signup/signup'
+// ✅ Correct (no nested BrowserRouter)
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/home/home";
+import Dashboard from "./pages/dashboard/dashboard";
 
 function App() {
   return (
-    <>
-      <Signup />
-    </>
-  )
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
